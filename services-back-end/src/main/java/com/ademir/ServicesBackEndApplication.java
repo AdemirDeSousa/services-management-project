@@ -9,7 +9,6 @@ public class ServicesBackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ServicesBackEndApplication.class, args);
 		
-		//iau
 	}
 
 }
