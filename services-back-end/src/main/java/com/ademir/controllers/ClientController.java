@@ -1,5 +1,7 @@
 package com.ademir.controllers;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,13 +27,13 @@ public class ClientController {
 	
 	@PostMapping
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public Client save(@RequestBody Client client) {
+	public Client save(@RequestBody @Valid Client client) {
 		return clientRepository.save(client);
 	}
 	
 	@GetMapping("/{id}")
 	public Client findById(@PathVariable Integer id) {
-		return clientRepository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		return clientRepository.findById(id).orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
 	}
 	
 	@DeleteMapping("/{id}")
@@ -42,7 +44,7 @@ public class ClientController {
 				clientRepository.delete(client);
 				return Void.TYPE;
 			})
-			.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+			.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
 	}
 	
 	@PutMapping("/{id}")
@@ -53,6 +55,6 @@ public class ClientController {
 				clientUpdated.setId(client.getId());
 				return clientRepository.save(clientUpdated);
 			})
-			.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+			.orElseThrow( () -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado."));
 	}
 }

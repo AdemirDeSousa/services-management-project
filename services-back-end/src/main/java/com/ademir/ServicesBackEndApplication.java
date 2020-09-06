@@ -15,7 +15,7 @@ public class ServicesBackEndApplication {
 	@Bean
 	public CommandLineRunner run( @Autowired ClientRepository clientRepository) {
 		return args -> {
-			Client client = Client.builder().name("Bruno Lacerda").cpf("11111111111").build();
+			Client client = Client.builder().name("Bruno Lacerda").cpf("81387313037").build();
 			clientRepository.save(client);
 		};
 	}
