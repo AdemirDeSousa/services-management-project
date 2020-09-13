@@ -2,11 +2,14 @@ package com.ademir.controllers;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -46,5 +49,13 @@ public class ServiceProvidedController {
 		serviceProvided.setValue(bigDecimalConverter.convert(dto.getValue()));
 		
 		return serviceProvidedRepository.save(serviceProvided);
+	}
+	
+	@GetMapping
+	public List<ServiceProvided> search(
+			@RequestParam(value = "name", required = false, defaultValue = "") String name,
+			@RequestParam(value = "month", required = false) Integer month){
+		
+		return serviceProvidedRepository.findByNameClientAndMonth("%" + name + "%", month);
 	}
 }
